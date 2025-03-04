@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Skill Exchange App</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
+    <string name="app_info">Welcome to the Skill Exchange App! Share your skills and connect with others to learn something new.</string>
+
+    <!-- Add these missing strings -->
+    <string name="login_label">Login</string>
+    <string name="explore_skills_label">Explore Skills</string>
+</resources>

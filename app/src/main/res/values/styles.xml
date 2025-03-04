@@ -1,0 +1,42 @@
+<resources>
+<!--    &lt;!&ndash; Base application theme &ndash;&gt;-->
+<!--    <style name="Theme.SkillExchangeApp" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/color_secondary</item>-->
+<!--        <item name="android:windowBackground">@color/white</item> &lt;!&ndash; Optional background color &ndash;&gt;-->
+<!--    </style>-->
+    <style name="toolBarStyle">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:background">@color/color_primary</item>
+        <item name="android:text">ExChange Skills</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/box_stroke_color_selector</item>
+        <item name="boxStrokeWidth">1.25dp</item>
+<!--        <item name="endIconMode">clear_text</item>-->
+<!--        <item name="endIconTint">@color/medGrey</item>-->
+        <item name="hintTextColor">@color/color_primary</item>
+        <item name="android:textColorHint">@color/lightGrey</item>
+    </style>
+
+    <style name="CustomShapeAppearanceTextInputLayout" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+<!--    <style name="MyTheme.EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+<!--        &lt;!&ndash; Inactive underline color&ndash;&gt;-->
+<!--        <item name="colorControlNormal">@color/color_secondary</item>-->
+
+<!--        &lt;!&ndash; Cursor and Active underline color, uses colorAccent by default if not defined&ndash;&gt;-->
+<!--        <item name="colorControlActivated">@color/color_primary</item>-->
+<!--    </style>-->
+
+
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme using Material Components -->
+    <style name="Theme.SkillExchangeApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize colors -->
+        <item name="colorPrimary">@color/color_primary</item> <!-- Primary color -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Text color on primary background -->
+        <item name="colorSecondary">@color/color_secondary</item> <!-- Secondary color -->
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <!-- Status bar settings -->
+        <item name="android:statusBarColor">@color/color_primary</item>
+    </style>
+</resources>
