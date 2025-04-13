@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -28,34 +27,56 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        viewBinding = true // ✅ Required for your binding issue
     }
 }
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.cardview)
-    implementation(libs.material)
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:1.11.0")
 
-    // ✅ Added SwipeRefreshLayout to fix the missing class error
+    // ✅ Added SwipeRefreshLayout to avoid missing dependency issues
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     // Firebase dependencies
-    implementation("com.google.firebase:firebase-database-ktx:20.2.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth-ktx:22.0.0")
+    implementation("com.google.firebase:firebase-database-ktx:20.2.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
 
+    implementation("com.google.firebase:firebase-appcheck-playintegrity:17.0.1")
+
+
+    // Fragment KTX
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+
+    // Glide for image loading
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.firebase.storage.ktx) // Ensure you have the correct version
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2") // For annotation processing
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    // Navigation UI για το setupWithNavController
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+
 }
 
 configurations {

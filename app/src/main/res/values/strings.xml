@@ -4,7 +4,12 @@
     <string name="register_button">Register</string>
     <string name="app_info">Welcome to the Skill Exchange App! Share your skills and connect with others to learn something new.</string>
 
-    <!-- Add these missing strings -->
+    <!-- Additional labels -->
     <string name="login_label">Login</string>
     <string name="explore_skills_label">Explore Skills</string>
+    <string name="user_image">User Profile Image</string>
+
+    <!-- Added missing string for FullScreenImageActivity -->
+    <string name="full_screen_image_activity">Full Screen Image</string>
+
 </resources>

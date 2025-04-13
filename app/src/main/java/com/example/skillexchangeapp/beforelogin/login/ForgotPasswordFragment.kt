@@ -1,4 +1,4 @@
-package com.example.skillexchangeapp
+package com.example.skillexchangeapp.beforelogin.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import com.example.skillexchangeapp.ui.LoginFragment
+import com.example.skillexchangeapp.R
 
 class ForgotPasswordFragment : Fragment() {
 

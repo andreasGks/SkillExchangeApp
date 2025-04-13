@@ -1,4 +1,4 @@
-package com.example.skillexchangeapp
+package com.example.skillexchangeapp.beforelogin.login
 
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import com.example.skillexchangeapp.ui.LoginFragment
+import com.example.skillexchangeapp.R
+import com.example.skillexchangeapp.beforelogin.login.createprofile.CreateAccountFragment
 
 class MainFragment : Fragment() {
 

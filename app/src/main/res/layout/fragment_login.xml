@@ -102,7 +102,7 @@
         android:textColor="@color/white"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:background="@drawable/custom_buttom"/>
+        android:background="@drawable/custom_button"/>
 
     <!-- Don't have an account? Sign Up -->
     <TextView

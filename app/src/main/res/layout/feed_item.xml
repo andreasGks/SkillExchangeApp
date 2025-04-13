@@ -21,7 +21,8 @@
             android:layout_height="50dp"
             android:src="@drawable/profile_icon"
             android:scaleType="centerCrop"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:clipToOutline="true"/> <!-- Make the image rounded -->
 
         <!-- Username -->
         <TextView
@@ -42,4 +43,3 @@
             android:layout_marginTop="4dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
-

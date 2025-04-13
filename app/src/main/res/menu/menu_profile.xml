@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- This item has both an icon and text -->
+    <item
+        android:id="@+id/action_edit_profile"
+        android:title="Edit"
+        android:icon="@drawable/edit_icon"
+        android:contentDescription="Edit Profile"
+        app:showAsAction="ifRoom|withText" />
+</menu>

@@ -1,10 +1,56 @@
+
+<!--<manifest xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools">-->
+
+<!--    &lt;!&ndash; Add Internet permission (if needed) &ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.INTERNET" />-->
+<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+
+<!--    <application-->
+<!--        android:name=".MyApplication"-->
+<!--    android:allowBackup="true"-->
+<!--    android:dataExtractionRules="@xml/data_extraction_rules"-->
+<!--    android:fullBackupContent="@xml/backup_rules"-->
+<!--    android:icon="@drawable/exskills_logo"-->
+<!--    android:label="@string/app_name"-->
+<!--    android:roundIcon="@drawable/exskills_logo"-->
+<!--    android:supportsRtl="true"-->
+<!--    android:theme="@style/Theme.SkillExchangeApp"-->
+<!--    tools:targetApi="31">-->
+
+<!--    &lt;!&ndash; MainActivity declaration &ndash;&gt;-->
+<!--    <activity-->
+<!--        android:name=".MainActivity"-->
+<!--        android:exported="true"-->
+<!--        android:label="@string/app_name"-->
+<!--        android:theme="@style/Theme.SkillExchangeApp">-->
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
+<!--    </activity>-->
+
+<!--    &lt;!&ndash; AfterLoginActivity &ndash;&gt;-->
+<!--    <activity-->
+<!--        android:name=".AfterLoginActivity"-->
+<!--        android:exported="true"-->
+<!--        android:label="@string/app_name"-->
+<!--        android:theme="@style/Theme.SkillExchangeApp" />-->
+
+<!--</application>-->
+<!--    </manifest>-->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Add Internet permission (if needed) -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".beforelogin.login.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,11 +63,10 @@
 
         <!-- MainActivity declaration -->
         <activity
-            android:name=".MainActivity"
+            android:name=".beforelogin.login.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.SkillExchangeApp"
-            >
+            android:theme="@style/Theme.SkillExchangeApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,10 +75,19 @@
 
         <!-- AfterLoginActivity -->
         <activity
-            android:name=".AfterLoginActivity"
+            android:name=".afterlogin.AfterLoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SkillExchangeApp" />
 
+        <!-- FullScreenImageActivity declaration -->
+        <activity
+            android:name=".afterlogin.FullScreenImageActivity"
+            android:exported="true"
+            android:label="@string/full_screen_image_activity"
+            android:theme="@style/Theme.SkillExchangeApp" />
+
     </application>
 </manifest>
+
+

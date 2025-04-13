@@ -34,7 +34,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:background="@drawable/custom_buttom"
+        android:background="@drawable/custom_button"
         android:text="Log In"
         android:textSize="14sp"
         android:textColor="@color/white"
@@ -54,7 +54,7 @@
         android:layout_marginRight="40dp"
         android:textSize="14sp"
         android:textColor="@color/white"
-        android:background="@drawable/custom_buttom"
+        android:background="@drawable/custom_button"
         />
 
     <!-- Forgot Password Text -->
