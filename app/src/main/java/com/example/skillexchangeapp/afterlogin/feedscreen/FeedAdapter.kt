@@ -1,5 +1,6 @@
 package com.example.skillexchangeapp.afterlogin.feedscreen
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.skillexchangeapp.afterlogin.profilescreen.DeleteConfirmationDialogFragment
 import com.example.skillexchangeapp.afterlogin.Post
 import com.example.skillexchangeapp.R
+import com.example.skillexchangeapp.afterlogin.FullScreenImageActivity
 
 class FeedAdapter(
     private var posts: List<Post>,
@@ -36,17 +38,22 @@ class FeedAdapter(
         val post = posts[position]
         holder.userName.text = post.userName
 
-        // Load the user image with Glide and round it
         if (post.userImageUri.isNotEmpty()) {
             Glide.with(holder.itemView.context)
                 .load(post.userImageUri)
-                .circleCrop() // Make the image round
+                .circleCrop()
                 .into(holder.userImage)
         } else {
-            holder.userImage.setImageResource(R.drawable.icons_user) // Default image if no URI
+            holder.userImage.setImageResource(R.drawable.icons_user)
         }
 
-        // Handle the post image
+        holder.userImage.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, FullScreenImageActivity::class.java)
+            intent.putExtra("image_url", post.userImageUri)
+            context.startActivity(intent)
+        }
+
         if (post.postImageUri != null) {
             try {
                 holder.postImage.visibility = View.VISIBLE
@@ -58,22 +65,29 @@ class FeedAdapter(
             }
         } else {
             holder.postImage.visibility = View.GONE
-            holder.postImage.setImageResource(R.drawable.empty_box) // Default image if no post image
+            holder.postImage.setImageResource(R.drawable.empty_box)
         }
 
-        // Set the caption text
+        holder.postImage.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, FullScreenImageActivity::class.java)
+            intent.putExtra("image_url", post.postImageUri)
+            context.startActivity(intent)
+        }
+
         holder.caption.text = post.caption
 
-        // Handle the delete button click
         holder.deletePost.setOnClickListener {
-            // Show confirmation dialog before deleting the post
             val dialog = DeleteConfirmationDialogFragment {
-                // If confirmed, trigger the delete operation via the callback
                 onDeletePost(post)
             }
-            dialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "DeleteConfirmationDialog")
+            dialog.show(
+                (holder.itemView.context as AppCompatActivity).supportFragmentManager,
+                "DeleteConfirmationDialog"
+            )
         }
     }
+
 
     override fun getItemCount(): Int = posts.size
 

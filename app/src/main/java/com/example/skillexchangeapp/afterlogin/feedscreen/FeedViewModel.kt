@@ -28,9 +28,10 @@ class FeedViewModel : ViewModel() {
     val posts: LiveData<List<Post>> get() = _posts
 
     init {
-        loadUserData()  // Fetch user info when ViewModel is created
-        loadPosts()     // Fetch posts
+        loadUserData()
+        loadPosts()
     }
+
     fun loadUserData() {
         val currentUser = auth.currentUser
         if (currentUser == null) {
@@ -46,7 +47,7 @@ class FeedViewModel : ViewModel() {
                     val lastName = document.getString("lastName") ?: ""
                     val profileImageUri = document.getString("profileImageUri") ?: ""
 
-                    _userFirstName.postValue(firstName)  // Use postValue() instead of value
+                    _userFirstName.postValue(firstName)
                     _userLastName.postValue(lastName)
                     _userProfileImageUri.postValue(profileImageUri)
 
@@ -59,7 +60,6 @@ class FeedViewModel : ViewModel() {
                 Log.e("FeedViewModel", "Error fetching user data", e)
             }
     }
-
 
     fun addPost(userName: String, userImageUri: Uri, postImageUri: Uri?, caption: String) {
         val currentUser = auth.currentUser
@@ -77,15 +77,13 @@ class FeedViewModel : ViewModel() {
         )
 
         postsCollection.add(newPost.toMap())
-            .addOnSuccessListener { documentRef ->
-                // Firestore generates an ID for the document
-                val postId = documentRef.id  // Get the auto-generated ID
-                newPost.copy(id = postId) // Update the Post object with the generated ID
-                loadPosts() // Refresh posts after adding a new post
+            .addOnSuccessListener {
+                loadPosts()
             }
-            .addOnFailureListener { e -> Log.e("FeedViewModel", "Error adding post", e) }
+            .addOnFailureListener { e ->
+                Log.e("FeedViewModel", "Error adding post", e)
+            }
     }
-
 
     fun loadPosts() {
         val currentUser = auth.currentUser
@@ -97,24 +95,34 @@ class FeedViewModel : ViewModel() {
         postsCollection.whereEqualTo("userId", currentUser.uid)
             .get()
             .addOnSuccessListener { documents ->
-                val postList = documents.map { document ->
-                    val post = Post.fromMap(document.data)
-                    // Fetch the user details based on userId
-                    firestore.collection("users").document(post.userId)
+                val tempPosts = mutableListOf<Post>()
+                val tasks = mutableListOf<com.google.android.gms.tasks.Task<*>>()
+
+                for (document in documents) {
+                    val post = Post.fromMap(document.data).copy(id = document.id)
+
+                    val userTask = firestore.collection("users").document(post.userId)
                         .get()
-                        .addOnSuccessListener { userDocument ->
-                            if (userDocument.exists()) {
-                                val userName = userDocument.getString("name") ?: "Unknown User"
-                                val userImageUri = userDocument.getString("profileImageUri") ?: ""
-                                post.userName = userName
-                                post.userImageUri = userImageUri
+                        .addOnSuccessListener { userDoc ->
+                            if (userDoc.exists()) {
+                                post.userName = userDoc.getString("firstName") ?: "Unknown"
+                                post.userImageUri = userDoc.getString("profileImageUri") ?: ""
                             }
                         }
-                    post.copy(id = document.id)  // Set Firestore document ID
+
+                    tasks.add(userTask)
+                    tempPosts.add(post)
                 }
-                _posts.value = postList.reversed() // Show newest posts first
+
+                // Wait until all user fetches are done
+                com.google.android.gms.tasks.Tasks.whenAllComplete(tasks)
+                    .addOnSuccessListener {
+                        _posts.value = tempPosts.reversed()
+                    }
             }
-            .addOnFailureListener { e -> Log.e("FeedViewModel", "Error loading posts", e) }
+            .addOnFailureListener { e ->
+                Log.e("FeedViewModel", "Error loading posts", e)
+            }
     }
 
     fun deletePost(post: Post) {
@@ -124,17 +132,14 @@ class FeedViewModel : ViewModel() {
             return
         }
 
-        // Ensure that post.id is a valid document ID and not just 'posts'
-        postsCollection.document(post.id)  // This should point to a specific post document
+        postsCollection.document(post.id)
             .delete()
             .addOnSuccessListener {
-                loadPosts() // Refresh posts after deletion
+                loadPosts()
                 Log.d("FeedViewModel", "Post deleted successfully.")
             }
             .addOnFailureListener { e ->
                 Log.e("FeedViewModel", "Error deleting post", e)
             }
     }
-
-
 }

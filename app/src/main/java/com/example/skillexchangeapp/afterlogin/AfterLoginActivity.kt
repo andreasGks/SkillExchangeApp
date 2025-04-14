@@ -47,32 +47,7 @@ class AfterLoginActivity : AppCompatActivity() {
         Log.d("AfterLoginActivity", "NavController is set up with BottomNavigationView.")
         bottomNavView.setupWithNavController(navController)
 
-        // OLD: Load default fragment manually only if no saved state (safety)
-        if (savedInstanceState == null) {
-            Log.d("AfterLoginActivity", "Loading default fragment: FeedFragment.")
-            loadFragment(FeedFragment()) // fallback/manual load
-        }
 
-        // OLD: Handle bottom nav manually (optional fallback or legacy)
-        bottomNavView.setOnItemSelectedListener { item ->
-            Log.d("AfterLoginActivity", "Bottom nav item selected: ${item.itemId}")
-            val selectedFragment: Fragment = when (item.itemId) {
-                R.id.home -> FeedFragment()
-                R.id.search -> SearchFragment()
-                R.id.profile -> ProfileFragment()
-                R.id.settings -> SettingsFragment()
-                else -> FeedFragment()
-            }
-            loadFragment(selectedFragment)
-            true
-        }
     }
 
-    // OLD: Manual fragment loading
-    private fun loadFragment(fragment: Fragment) {
-        Log.d("AfterLoginActivity", "Replacing fragment with: ${fragment.javaClass.simpleName}")
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, fragment) // Updated ID to match NavHost
-            .commit()
-    }
 }

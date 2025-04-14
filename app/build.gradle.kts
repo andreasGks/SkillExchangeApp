@@ -36,7 +36,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true // ✅ Required for your binding issue
+        viewBinding = true // Enables ViewBinding in the project
     }
 }
 
@@ -48,7 +48,7 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.google.android.material:material:1.11.0")
 
-    // ✅ Added SwipeRefreshLayout to avoid missing dependency issues
+    // Added SwipeRefreshLayout to avoid missing dependency issues
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     // Firebase dependencies
@@ -57,26 +57,27 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.0.0")
     implementation("com.google.firebase:firebase-database-ktx:20.2.0")
     implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
-
     implementation("com.google.firebase:firebase-appcheck-playintegrity:17.0.1")
 
-
-    // Fragment KTX
+    // Fragment KTX for easier fragment handling
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     // Glide for image loading
-    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    implementation("com.github.bumptech.glide:glide:4.13.2")
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.androidx.material3.android)
     implementation(libs.firebase.storage.ktx) // Ensure you have the correct version
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2") // For annotation processing
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2") // For Glide's annotation processing
+
+    // Circular image view for profile pics
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    // Navigation UI για το setupWithNavController
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    // Navigation UI for `setupWithNavController`
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
-
+    // PhotoView for zoomable images
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
 }
 
 configurations {

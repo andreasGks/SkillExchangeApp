@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_background"
     android:fitsSystemWindows="true"
-    tools:context=".afterlogin.profilescreen.ProfileFragment">
+    tools:context=".afterlogin.AfterLoginActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

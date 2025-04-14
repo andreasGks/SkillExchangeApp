@@ -60,8 +60,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile),
         observeViewModel()
 
         editProfileView.setOnClickListener {
-            //findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
-            findNavController().navigate(R.id.action_feedFragment_to_profileFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
     }
 
