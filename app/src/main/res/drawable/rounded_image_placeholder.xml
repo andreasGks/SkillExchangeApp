@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @drawable/rounded_image_placeholder -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/color_card_bg"/>
+    <size
+        android:width="84dp"
+        android:height="84dp"/>
+    <corners android:radius="42dp"/> <!-- This makes it circular -->
+</shape>
+

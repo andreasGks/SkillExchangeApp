@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.skillexchangeapp.beforelogin.login.MainActivity
 import com.example.skillexchangeapp.R
-import com.example.skillexchangeapp.afterlogin.profilescreen.EditProfileFragment
+import com.example.skillexchangeapp.afterlogin.profilescreen.editprofilescreen.EditProfileFragment
+import com.example.skillexchangeapp.beforelogin.login.MainActivity
 
 class SettingsFragment : Fragment() {
 
@@ -20,19 +20,11 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
-        val btnEditProfile: Button = view.findViewById(R.id.btnEditProfile)
+
         val btnLogout: Button = view.findViewById(R.id.btnLogout)
 
-
-        btnEditProfile.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, EditProfileFragment())
-                .addToBackStack(null)
-                .commit()
-        }
 
         btnLogout.setOnClickListener {
             showLogoutConfirmationDialog()
@@ -57,7 +49,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun navigateToMainScreen() {
-        requireActivity().finish() // Finish AfterLoginActivity
+        requireActivity().finish() // Close AfterLoginActivity
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

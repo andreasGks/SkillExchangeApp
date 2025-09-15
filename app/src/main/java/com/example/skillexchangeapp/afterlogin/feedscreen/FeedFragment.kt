@@ -1,7 +1,7 @@
 package com.example.skillexchangeapp.afterlogin.feedscreen
 
 import android.os.Bundle
-import android.util.Log  // ✅ Added import for Log
+import android.util.Log  //  Added import for Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.skillexchangeapp.afterlogin.PostBottomSheetFragment
 import com.example.skillexchangeapp.R
+import com.example.skillexchangeapp.afterlogin.ImageTransformerSingletonObj
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FeedFragment : Fragment() {
@@ -57,12 +58,31 @@ class FeedFragment : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         }
 
-        // Observe user profile image and update ImageView
-        viewModel.userProfileImageUri.observe(viewLifecycleOwner) { imageUrl ->
-            if (imageUrl.isNotEmpty()) {
-                Glide.with(requireContext()).load(imageUrl).into(userProfileImage)
+// Observe user profile image and update ImageView
+        viewModel.userProfileImageBase64.observe(viewLifecycleOwner) { base64String ->
+            if (base64String.isNullOrBlank()) {
+                // Δεν έχει φωτογραφία, φορτώνουμε default icon στρογγυλό
+                Glide.with(this)
+                    .load(R.drawable.profile_icon)
+                    .circleCrop()
+                    .into(userProfileImage)
+            } else {
+                val bitmap = ImageTransformerSingletonObj.decodeBase64ToBitmap(base64String)
+                if (bitmap != null) {
+                    Glide.with(this)
+                        .load(bitmap)
+                        .circleCrop() // Το κάνει στρογγυλό
+                        .into(userProfileImage)
+                } else {
+                    Glide.with(this)
+                        .load(R.drawable.profile_icon)
+                        .circleCrop()
+                        .into(userProfileImage)
+                }
             }
         }
+
+
 
         // Handle pull-to-refresh
         swipeRefreshLayout.setOnRefreshListener {

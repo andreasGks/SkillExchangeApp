@@ -54,7 +54,7 @@ class PostBottomSheetFragment : BottomSheetDialogFragment() {
                     val userImageUri = if (!userImageUrl.isNullOrEmpty()) {
                         Uri.parse(userImageUrl) // Load the real profile image (when available)
                     } else {
-                        Uri.parse("android.resource://${requireContext().packageName}/${R.drawable.icons_user}") // Default icon
+                        Uri.parse("android.resource://${requireContext().packageName}/${R.drawable.default_user_icon}") // Default icon
                     }
                     Log.d("PostBottomSheetFragment", "User Image URI: $userImageUri")
 
@@ -71,7 +71,8 @@ class PostBottomSheetFragment : BottomSheetDialogFragment() {
                 }.addOnFailureListener {
                     Log.d("PostBottomSheetFragment", "Firestore fetch failed, using default values")
                     val userName = "Unknown User"
-                    val userImageUri = Uri.parse("android.resource://${requireContext().packageName}/${R.drawable.icons_user}")
+                    val userImageUri = Uri.parse("android.resource://${requireContext().packageName}/${R.drawable.default_user_icon
+                    }")
 
                     val caption = binding.etPostContent.text.toString().trim()
                     if (caption.isNotEmpty() || imageUri != null) {

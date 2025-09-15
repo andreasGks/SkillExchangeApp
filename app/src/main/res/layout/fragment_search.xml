@@ -1,12 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/color_background">
 
-    <!-- Other Search Fragment UI elements -->
+    <!-- Search input -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/searchview_background"
+        android:queryHint="Search for users"
+        android:iconifiedByDefault="false"
+        android:layout_marginBottom="12dp" />
 
+    <!-- Filter Button -->
+    <Button
+        android:id="@+id/open_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filters"
+        android:drawableStart="@drawable/filter_icon"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/color_primary"
+        android:textColor="@android:color/white" />
 
+    <!-- Progress indicator -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Search results -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:background="@color/color_background"
+        android:visibility="gone"/>
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 class AuthRepository {
 
@@ -15,73 +16,72 @@ class AuthRepository {
         return auth.currentUser
     }
 
-    // Login function with improved error handling
-    fun login(email: String, password: String, callback: (Boolean, String?) -> Unit) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    user?.let {
-                        // Check if user data exists in Firestore, if not, create it
-                        checkUserInDatabase(it.uid, email, callback)
-                    }
-                } else {
-                    val errorMessage = task.exception?.message ?: "Login failed due to unknown error"
-                    Log.e("AuthRepository", "Login error: $errorMessage")
-                    callback(false, errorMessage)
-                }
+    // Login function with coroutine support and improved error handling
+    suspend fun login(email: String, password: String): Boolean {
+        return try {
+            auth.signInWithEmailAndPassword(email, password).await()
+            val user = auth.currentUser
+            if (user != null) {
+                // Check if user data exists in Firestore, if not, create it
+                checkUserInDatabase(user.uid, email)
+                true
+            } else {
+                Log.e("AuthRepository", "Login failed: user is null after sign-in")
+                false
             }
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Login error: ${e.message}", e)
+            false
+        }
     }
 
-    // Register function (fixed firstName + lastName handling)
-    fun register(
+    // Register function with coroutine support
+    suspend fun register(
         email: String,
         password: String,
-        firstName: String,  // Corrected name
-        lastName: String,
-        callback: (Boolean, String?) -> Unit
-    ) {
-        auth.fetchSignInMethodsForEmail(email)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val signInMethods = task.result?.signInMethods
-                    if (signInMethods != null && signInMethods.isNotEmpty()) {
-                        callback(false, "This email is already in use.")
-                    } else {
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { registerTask ->
-                                if (registerTask.isSuccessful) {
-                                    val user = auth.currentUser
-                                    user?.let {
-                                        saveUserToDatabase(it, firstName, lastName, callback)
-                                    } ?: callback(false, "User creation failed.")
-                                } else {
-                                    val errorMessage = registerTask.exception?.message ?: "Registration failed."
-                                    callback(false, errorMessage)
-                                }
-                            }
-                    }
+        firstName: String,
+        lastName: String
+    ): Boolean {
+        return try {
+            val signInMethods = auth.fetchSignInMethodsForEmail(email).await().signInMethods
+            if (signInMethods != null && signInMethods.isNotEmpty()) {
+                Log.e("AuthRepository", "This email is already in use.")
+                false
+            } else {
+                auth.createUserWithEmailAndPassword(email, password).await()
+                val user = auth.currentUser
+                if (user != null) {
+                    saveUserToDatabase(user, firstName, lastName)
+                    true
                 } else {
-                    callback(false, "Error checking email existence: ${task.exception?.message}")
+                    Log.e("AuthRepository", "User creation failed: user is null after registration")
+                    false
                 }
             }
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Registration error: ${e.message}", e)
+            false
+        }
     }
 
-    // Save user to Firestore
-    private fun saveUserToDatabase(
+    // Save user to Firestore (suspend)
+    private suspend fun saveUserToDatabase(
         user: FirebaseUser,
         firstName: String,
-        lastName: String,
-        callback: (Boolean, String?) -> Unit
+        lastName: String
     ) {
         val nickName = "$firstName $lastName"
+        val defaultProfilePhoto = "https://example.com/default_profile_photo.png" // Replace with actual URL
 
         val userMap = hashMapOf(
-            "uid" to user.uid,
-            "email" to user.email,
-            "userName" to firstName,
-            "lastName" to lastName,
-            "nickName" to nickName
+            "uid"          to user.uid,
+            "email"        to user.email,
+            "firstName"    to firstName,
+            "lastName"     to lastName,
+            "nickName"     to nickName,
+            "profilePhoto" to defaultProfilePhoto,
+            "description"  to "",
+            "location"     to ""
         )
 
         Log.d("AuthRepository", "Saving user to Firestore with UID: ${user.uid}")
@@ -89,59 +89,51 @@ class AuthRepository {
         firestore.collection("users")
             .document(user.uid)
             .set(userMap)
-            .addOnSuccessListener {
-                Log.d("AuthRepository", "User ${user.email} saved to database successfully")
-                callback(true, null)
-            }
-            .addOnFailureListener { exception ->
-                val errorMessage = exception.message ?: "Unknown error saving user data"
-                Log.e("AuthRepository", "Error saving user to Firestore: $errorMessage")
-                callback(false, errorMessage)
-            }
+            .await()
+
+        Log.d("AuthRepository", "User ${user.email} saved to database successfully")
     }
 
-    // Check if the user exists in Firestore
-    private fun checkUserInDatabase(
-        userId: String,
-        email: String,
-        callback: (Boolean, String?) -> Unit
-    ) {
-        firestore.collection("users")
-            .document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (!document.exists()) {
-                    val userMap = hashMapOf(
-                        "uid" to userId,
-                        "email" to email,
-                        "firstName" to "",
-                        "lastName" to "",
-                        "nickName" to ""
-                    )
-                    firestore.collection("users")
-                        .document(userId)
-                        .set(userMap)
-                        .addOnSuccessListener {
-                            Log.d("AuthRepository", "User $email added to Firestore")
-                            callback(true, null)
-                        }
-                        .addOnFailureListener { exception ->
-                            val errorMessage = exception.message ?: "Error adding user to Firestore"
-                            Log.e("AuthRepository", "Error adding user to Firestore: $errorMessage")
-                            callback(false, errorMessage)
-                        }
-                } else {
-                    callback(true, null)
-                }
+    // Check if user exists in Firestore, if not create it (suspend)
+    private suspend fun checkUserInDatabase(userId: String, email: String) {
+        try {
+            val document = firestore.collection("users").document(userId).get().await()
+            if (!document.exists()) {
+                val userMap = hashMapOf(
+                    "uid"          to userId,
+                    "email"        to email,
+                    "firstName"    to "",
+                    "lastName"     to "",
+                    "nickName"     to "",
+                    "profilePhoto" to "",
+                    "location"     to ""
+                )
+                firestore.collection("users").document(userId).set(userMap).await()
+                Log.d("AuthRepository", "User $email added to Firestore")
             }
-            .addOnFailureListener { exception ->
-                val errorMessage = exception.message ?: "Error checking user data in Firestore"
-                Log.e("AuthRepository", "Error checking user in Firestore: $errorMessage")
-                callback(false, errorMessage)
-            }
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Error checking/adding user in Firestore: ${e.message}", e)
+            throw e // προωθούμε το error αν χρειαστεί να χειριστεί πιο πάνω
+        }
     }
 
-    // Logout
+    // Update user location (suspend)
+    suspend fun updateUserLocation(newLocation: String): Boolean {
+        val currentUser = auth.currentUser ?: return false
+        return try {
+            firestore.collection("users")
+                .document(currentUser.uid)
+                .update("location", newLocation)
+                .await()
+            Log.d("AuthRepository", "Location updated to: $newLocation")
+            true
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Error updating location: ${e.message}", e)
+            false
+        }
+    }
+
+    // Logout (sync)
     fun logout() {
         auth.signOut()
     }

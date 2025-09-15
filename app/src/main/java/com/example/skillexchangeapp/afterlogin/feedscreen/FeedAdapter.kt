@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.skillexchangeapp.afterlogin.profilescreen.DeleteConfirmationDialogFragment
-import com.example.skillexchangeapp.afterlogin.Post
 import com.example.skillexchangeapp.R
 import com.example.skillexchangeapp.afterlogin.FullScreenImageActivity
+import com.example.skillexchangeapp.afterlogin.ImageTransformerSingletonObj
+import com.example.skillexchangeapp.model.Post
 
 class FeedAdapter(
     private var posts: List<Post>,
@@ -37,20 +37,25 @@ class FeedAdapter(
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val post = posts[position]
         holder.userName.text = post.userName
-
         if (post.userImageUri.isNotEmpty()) {
-            Glide.with(holder.itemView.context)
-                .load(post.userImageUri)
-                .circleCrop()
-                .into(holder.userImage)
+            val bitmap = ImageTransformerSingletonObj.decodeBase64ToBitmap(post.userImageUri)
+            if (bitmap != null) {
+                Glide.with(holder.itemView.context)
+                    .load(bitmap)
+                    .circleCrop()
+                    .into(holder.userImage)
+            } else {
+                holder.userImage.setImageResource(R.drawable.default_user_icon)
+            }
         } else {
-            holder.userImage.setImageResource(R.drawable.icons_user)
+            holder.userImage.setImageResource(R.drawable.default_user_icon)
         }
+
 
         holder.userImage.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, FullScreenImageActivity::class.java)
-            intent.putExtra("image_url", post.userImageUri)
+            intent.putExtra("IMAGE_URL_KEY", post.userImageUri)
             context.startActivity(intent)
         }
 
@@ -71,7 +76,7 @@ class FeedAdapter(
         holder.postImage.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, FullScreenImageActivity::class.java)
-            intent.putExtra("image_url", post.postImageUri)
+            intent.putExtra("IMAGE_URL_KEY", post.postImageUri)
             context.startActivity(intent)
         }
 
@@ -97,4 +102,6 @@ class FeedAdapter(
         notifyDataSetChanged()
     }
 }
+
+
 

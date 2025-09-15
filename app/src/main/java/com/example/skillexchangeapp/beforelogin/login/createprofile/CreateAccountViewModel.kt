@@ -1,42 +1,48 @@
 package com.example.skillexchangeapp.beforelogin.login.createprofile
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.ktx.auth
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.launch
+
 class CreateAccountViewModel : ViewModel() {
 
+    private val auth: FirebaseAuth = Firebase.auth
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
     fun register(email: String, password: String, fullName: String, callback: (Boolean, String?) -> Unit) {
-        val auth = Firebase.auth
-        val firestore = FirebaseFirestore.getInstance()
+        viewModelScope.launch {
+            try {
+                // Δημιουργία χρήστη στο Firebase Auth
+                val authResult = auth.createUserWithEmailAndPassword(email, password).await()
+                val uid = authResult.user?.uid ?: throw Exception("User ID is null")
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+                val defaultProfilePhoto = "https://example.com/default_profile_photo.png" // Default photo URL
+                val firstName = fullName.split(" ").firstOrNull() ?: ""
+                val lastName = fullName.split(" ").lastOrNull() ?: ""
 
-                    val userMap = hashMapOf(
-                        "uid" to uid,
-                        "email" to email,
-                        "fullName" to fullName,
-                        "firstName" to fullName.split(" ").firstOrNull(),
-                        "lastName" to fullName.split(" ").lastOrNull()
-                    )
+                val userMap = hashMapOf(
+                    "uid" to uid,
+                    "email" to email,
+                    "fullName" to fullName,
+                    "firstName" to firstName,
+                    "lastName" to lastName,
+                    "profilePhoto" to defaultProfilePhoto
+                )
 
-                    // Save user data to Firestore
-                    firestore.collection("users").document(uid)
-                        .set(userMap)
-                        .addOnSuccessListener {
-                            callback(true, null)
-                        }
-                        .addOnFailureListener { e ->
-                            callback(false, "Failed to save user data: ${e.message}")
-                        }
-                } else {
-                    callback(false, task.exception?.message)
-                }
+                // Αποθήκευση των στοιχείων χρήστη στο Firestore
+                firestore.collection("users").document(uid).set(userMap).await()
+
+                // Αν όλα πήγαν καλά
+                callback(true, null)
+            } catch (e: Exception) {
+                // Κάτι πήγε στραβά
+                callback(false, e.message)
             }
+        }
     }
-
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/color_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@color/color_primary"
+        android:elevation="4dp"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back_button_icon"
+            android:contentDescription="Back button"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            app:tint="@color/white"/>
+
+        <TextView
+            android:text="What are you looking for?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/submitButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="submit"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/checked_icon"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+
+    <!-- RecyclerView section -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCategories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="never"/>
+
+</LinearLayout>

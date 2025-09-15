@@ -3,7 +3,9 @@ package com.example.skillexchangeapp.beforelogin.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.launch
 import repository.AuthRepository
 
 class LoginViewModel : ViewModel() {
@@ -30,10 +32,16 @@ class LoginViewModel : ViewModel() {
             return
         }
 
-        authRepository.login(email, password) { success, error ->
-            _loginResult.postValue(success)
-            if (!success) {
-                _errorMessage.postValue(error)
+        viewModelScope.launch {
+            try {
+                val success = authRepository.login(email, password)
+                _loginResult.postValue(success)
+                if (!success) {
+                    _errorMessage.postValue("Login failed. Invalid credentials.")
+                }
+            } catch (e: Exception) {
+                _loginResult.postValue(false)
+                _errorMessage.postValue(e.message ?: "Something went wrong.")
             }
         }
     }

@@ -10,10 +10,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.skillexchangeapp.R
 import com.example.skillexchangeapp.beforelogin.login.MainActivity
-import com.example.skillexchangeapp.afterlogin.feedscreen.FeedFragment
-import com.example.skillexchangeapp.afterlogin.profilescreen.ProfileFragment
-import com.example.skillexchangeapp.afterlogin.searchscreen.SearchFragment
-import com.example.skillexchangeapp.afterlogin.settingsscreen.SettingsFragment
+//import com.example.skillexchangeapp.afterlogin.feedscreen.FeedFragment
+//import com.example.skillexchangeapp.afterlogin.profilescreen.ProfileFragment
+//import com.example.skillexchangeapp.afterlogin.searchscreen.SearchFragment
+//import com.example.skillexchangeapp.afterlogin.settingsscreen.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 

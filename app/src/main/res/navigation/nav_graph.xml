@@ -1,38 +1,4 @@
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<navigation xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    app:startDestination="@id/feedFragment">-->
-
-<!--    <fragment-->
-<!--        android:id="@+id/feedFragment"-->
-<!--        android:name="com.example.skillexchangeapp.afterlogin.feedscreen.FeedFragment"-->
-<!--        android:label="FeedFragment"-->
-<!--        tools:layout="@layout/fragment_feed">-->
-<!--        <action-->
-<!--            android:id="@+id/action_feedFragment_to_profileFragment"-->
-<!--            app:destination="@id/profileFragment" />-->
-<!--    </fragment>-->
-
-<!--    <fragment-->
-<!--        android:id="@+id/profileFragment"-->
-<!--        android:name="com.example.skillexchangeapp.afterlogin.profilescreen.ProfileFragment"-->
-<!--        android:label="ProfileFragment"-->
-<!--        tools:layout="@layout/fragment_profile">-->
-<!--        &lt;!&ndash; Action to navigate to EditProfileFragment &ndash;&gt;-->
-<!--        <action-->
-<!--            android:id="@+id/action_profileFragment_to_editProfileFragment"-->
-<!--            app:destination="@id/editProfileFragment" />-->
-<!--    </fragment>-->
-
-<!--    &lt;!&ndash; Add EditProfileFragment &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/editProfileFragment"-->
-<!--        android:name="com.example.skillexchangeapp.afterlogin.profilescreen.EditProfileFragment"-->
-<!--        android:label="EditProfileFragment"-->
-<!--        tools:layout="@layout/fragment_edit_profile" />-->
-<!--</navigation>-->
-
+<?xml version="1.0" encoding="utf-8"?>
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -44,14 +10,25 @@
         android:id="@+id/feedFragment"
         android:name="com.example.skillexchangeapp.afterlogin.feedscreen.FeedFragment"
         android:label="Feed"
-        tools:layout="@layout/fragment_feed" />
+        tools:layout="@layout/fragment_feed" >
+
+        <!-- Για παράδειγμα, action προς Settings -->
+        <action
+            android:id="@+id/action_feedFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 
     <!-- Search -->
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.skillexchangeapp.afterlogin.searchscreen.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_searchFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <!-- Profile -->
     <fragment
@@ -60,10 +37,33 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
 
-        <!-- Action to EditProfileFragment -->
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <action
+            android:id="@+id/action_searchFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment"/>
+            app:destination="@id/editProfileFragment" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_addNewOfferFragment"
+            app:destination="@id/addNewOfferFragment" />
+
+        <!-- Προσθήκη action προς Settings (πχ από Profile μπορεί να πας Settings) -->
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_whatAreYouLookingForFragment"
+            app:destination="@id/whatAreYouLookingForFragment" />
+
     </fragment>
 
     <!-- Settings -->
@@ -73,10 +73,24 @@
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
 
+    <fragment
+        android:id="@+id/whatAreYouLookingForFragment"
+        android:name="com.example.skillexchangeapp.afterlogin.profilescreen.WhatAreYouLookingForFragment"
+        android:label="What Are You Looking For"
+        tools:layout="@layout/fragment_what_are_you_looking_for" />
+
     <!-- EditProfile -->
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.skillexchangeapp.afterlogin.profilescreen.EditProfileFragment"
+        android:name="com.example.skillexchangeapp.afterlogin.profilescreen.editprofilescreen.EditProfileFragment"
         android:label="Edit Profile"
-        tools:layout="@layout/fragment_edit_profile"/>
+        tools:layout="@layout/fragment_edit_profile" />
+
+    <!-- Add New Offer -->
+    <fragment
+        android:id="@+id/addNewOfferFragment"
+        android:name="com.example.skillexchangeapp.afterlogin.profilescreen.addoffer.AddNewOfferFragment"
+        android:label="Add New Offer"
+        tools:layout="@layout/fragment_add_new_offer" />
+
 </navigation>

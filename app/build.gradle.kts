@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -67,7 +68,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.androidx.material3.android)
-    implementation(libs.firebase.storage.ktx) // Ensure you have the correct version
+    implementation(libs.firebase.storage.ktx)
+    implementation(libs.play.services.maps)
+    implementation(libs.firebase.crashlytics.buildtools) // Ensure you have the correct version
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2") // For Glide's annotation processing
 
     // Circular image view for profile pics
@@ -76,8 +79,13 @@ dependencies {
     // Navigation UI for `setupWithNavController`
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
-    // PhotoView for zoomable images
-    implementation("com.github.chrisbanes:PhotoView:2.3.0")
+    // MAPS dependencies
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation ("com.google.code.gson:gson:2.11.0")
+
+
 }
 
 configurations {

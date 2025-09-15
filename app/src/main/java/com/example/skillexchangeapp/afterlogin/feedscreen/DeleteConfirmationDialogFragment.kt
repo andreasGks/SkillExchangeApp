@@ -1,4 +1,4 @@
-package com.example.skillexchangeapp.afterlogin.profilescreen
+package com.example.skillexchangeapp.afterlogin.feedscreen
 
 import android.app.Dialog
 import android.os.Bundle

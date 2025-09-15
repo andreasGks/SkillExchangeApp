@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:padding="24dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/textAddSkillTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Offer"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Instructions -->
+    <TextView
+        android:id="@+id/textAddSkillDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Describe the skill you're offering below 👇"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/textAddSkillTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Field -->
+    <EditText
+        android:id="@+id/editSkillField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="e.g. Art lessons with Baba"
+        android:background="@drawable/rounded_edittext"
+        android:padding="14dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_light"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/textAddSkillDesc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Category Label -->
+    <TextView
+        android:id="@+id/textCategoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/editSkillField"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Category -->
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Select category"
+        android:background="@drawable/rounded_edittext"
+        android:padding="14dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_light"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:inputType="none"
+        app:layout_constraintTop_toBottomOf="@id/textCategoryLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Subcategory Label -->
+    <TextView
+        android:id="@+id/textSubCategoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subcategory"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/autoCompleteCategory"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Subcategory -->
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteSubCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Select subcategory"
+        android:background="@drawable/rounded_edittext"
+        android:padding="14dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_light"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:inputType="none"
+        app:layout_constraintTop_toBottomOf="@id/textSubCategoryLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Description -->
+    <EditText
+        android:id="@+id/editSkillDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Describe your skill..."
+        android:minLines="4"
+        android:gravity="top|start"
+        android:background="@drawable/rounded_edittext"
+        android:padding="14dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_light"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/autoCompleteSubCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Image Label -->
+    <TextView
+        android:id="@+id/textSkillImageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Image"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/editSkillDescription"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Image Button -->
+    <ImageView
+        android:id="@+id/imageSkillPreview"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/add_image_ic"
+        android:scaleType="centerCrop"
+        android:contentDescription="Add Image"
+        android:clickable="true"
+        android:focusable="true"
+        android:clipToOutline="true"
+        app:layout_constraintTop_toBottomOf="@id/textSkillImageLabel"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Confirm Button -->
+    <Button
+        android:id="@+id/buttonConfirmSkill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Confirm Offer"
+        android:textSize="16sp"
+        android:backgroundTint="@color/color_primary"
+        android:textColor="@color/white"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/imageSkillPreview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

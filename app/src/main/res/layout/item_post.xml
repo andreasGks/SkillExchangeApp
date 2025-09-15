@@ -6,17 +6,18 @@
     android:layout_height="wrap_content"
     android:padding="12dp"
     android:background="@android:color/white"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="8dp"
+    android:elevation="4dp">
 
     <!-- User Icon -->
     <ImageView
         android:id="@+id/userImage"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/icons_user"
+        android:src="@drawable/default_user_icon"
         android:background="@drawable/circle_background"
         android:scaleType="centerCrop"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
         android:contentDescription="@string/user_image"
         android:clipToOutline="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,21 +34,8 @@
         app:layout_constraintStart_toEndOf="@id/userImage"
         app:layout_constraintTop_toTopOf="@id/userImage"
         app:layout_constraintBottom_toBottomOf="@id/userImage"
-        app:layout_constraintEnd_toStartOf="@id/optionsMenu"
+        app:layout_constraintEnd_toStartOf="@id/deletePost"
         android:layout_marginStart="8dp" />
-
-    <!-- Three Dots Icon -->
-    <ImageView
-        android:id="@+id/optionsMenu"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/three_dots"
-        android:contentDescription="Options"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintTop_toTopOf="@id/userImage"
-        app:layout_constraintEnd_toStartOf="@id/deletePost" />
 
     <!-- Delete Icon -->
     <ImageView

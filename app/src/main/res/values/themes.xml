@@ -7,6 +7,9 @@
         <item name="colorOnPrimary">@color/white</item> <!-- Text color on primary background -->
         <item name="colorSecondary">@color/color_secondary</item> <!-- Secondary color -->
 
+
+
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
